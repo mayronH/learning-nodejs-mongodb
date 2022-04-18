@@ -1,0 +1,64 @@
+<section class="section">
+    {{#each errors}}
+        <div class="notification is-danger">
+            <button class="delete"></button>
+            {{text}}
+        </div>
+    {{else}}
+    {{/each}}
+    <h1 class="title is-4">Cadastro de Postagens</h1>
+    <form action="/admin/post/new" method="post">
+        <div class="field">
+            <label class="label" for="title">Título</label>
+            <div class="control">
+                <input class="input" type="text" id="title" name="title" placeholder="Título da postagem" />
+            </div>
+        </div>
+        <div class="field">
+            <label class="label" for="slug">Slug</label>
+            <div class="control">
+                <input class="input" type="text" id="slug" name="slug" placeholder="Slug da postagem" />
+            </div>
+        </div>
+        <div class="field">
+            <label class="label" for="description">Descrição</label>
+            <div class="control">
+                <input
+                    class="input"
+                    type="text"
+                    id="description"
+                    name="description"
+                    placeholder="Descrição da postagem"
+                />
+            </div>
+        </div>
+        <div class="field">
+            <label class="label" for="content">Conteúdo</label>
+            <div class="control">
+                <textarea class="textarea" id="content" name="content"></textarea>
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="select">
+                <label class="name" for="category">Categoria</label>
+                <select id="category">
+                    {{#each categories}}
+                    <option value="{{_id}}">{{name}}</option>
+                    {{else}}
+                    <option value="">Nenhuma categoria cadastrada</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+
+        <div class="buttons is-grouped pt-5">
+            <div class="control">
+                <button class="button is-link" type="submit">Salvar</button>
+            </div>
+            <div class="control">
+                <button class="button is-link is-light">Cancelar</button>
+            </div>
+        </div>
+    </form>
+</section>

@@ -14,6 +14,19 @@ router.get("/posts", (req, res) => {
     res.render("admin/posts");
 });
 
+router.get("/posts/add", (req, res) => {
+    Category.find()
+        .lean()
+        .then((categories) => {
+            res.render("admin/addPost", { categories: categories });
+        })
+        .catch((error) => {
+            req.flash("error_msg", "Erro ao exibir categorias, tente novamente mais tarde");
+            console.log(error);
+            res.send("/admin");
+        });
+});
+
 router.get("/categories", (req, res) => {
     Category.find()
         .sort({ date: "desc" })
