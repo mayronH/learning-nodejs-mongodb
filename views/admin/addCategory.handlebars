@@ -1,0 +1,32 @@
+<section class="section">
+    {{#each errors}}
+        <div class="notification is-danger">
+            <button class="delete"></button>
+            {{text}}
+        </div>
+    {{else}}
+    {{/each}}
+    <h1 class="title is-4">Cadastro de Categoria</h1>
+    <form action="/admin/categories/new" method="post">
+        <div class="field">
+            <label class="label" for="name">Nome</label>
+            <div class="control">
+                <input class="input" type="text" id="name" name="name" placeholder="Nome da categoria" />
+            </div>
+        </div>
+        <div class="field">
+            <label class="label" for="slug">Slug</label>
+            <div class="control">
+                <input class="input" type="text" id="slug" name="slug" placeholder="Slug da categoria" />
+            </div>
+        </div>
+        <div class="field is-grouped">
+            <div class="control">
+                <button class="button is-link" type="submit">Salvar</button>
+            </div>
+            <div class="control">
+                <button class="button is-link is-light">Cancelar</button>
+            </div>
+        </div>
+    </form>
+</section>
