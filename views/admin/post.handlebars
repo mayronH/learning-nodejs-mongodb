@@ -3,19 +3,19 @@
         <div class="card-content">
             <div class="content is-flex is-flex-direction-column is-justify-content-space-between">
                 <div class="is-flex is-flex-direction-row is-justify-content-space-between">
-                    <div class="is-flex is-flex-direction-column">
+                    <div class="block is-flex is-flex-direction-column">
                         <h3 class="title is-5 is-capitalized mb-5">{{post.title}}</h3>
                         <small class="subtitle is-6 is-lowercase mb-2">{{post.slug}}</small>
                         <small class="">{{post.description}}</small>
                     </div>
-                    <div>
+                    <div class="block">
                         <span class="tag is-primary is-light is-medium">{{post.category.name}}</span>
                     </div>
                 </div>
-                <div class="content py-3">
+                <div class="block py-3">
                     <p class="post-content">{{post.content}}</p>
                 </div>
-                <div class="has-text-right">
+                <div class="block has-text-right">
                     <time datetime="{{post.date}}">{{post.date}}</time>
                 </div>
             </div>

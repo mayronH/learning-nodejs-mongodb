@@ -1,11 +1,17 @@
-<header class="header is-relative has-background-light is-clipped">
-    <nav class="navbar has-background-light" role="navigation" aria-label="main navigation">
+<header class="header is-relative is-clipped">
+    <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
         <div class="navbar-brand is-align-items-center">
             <a class="navbar-item" href="">
                 Blog NodeJS
             </a>
 
-            <a role="button" class="navbar-burger  navbar-menu-open is-flex-touch is-align-items-center is-justify-content-center" aria-label="menu" aria-expanded="false" data-target="menu">
+            <a
+                role="button"
+                class="navbar-burger navbar-menu-open is-flex-touch is-align-items-center is-justify-content-center"
+                aria-label="menu"
+                aria-expanded="false"
+                data-target="menu"
+            >
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
@@ -13,9 +19,24 @@
         </div>
         <div id="menu" class="navbar-menu">
             <div class="navbar-start">
-                <a class="navbar-item">
+                <a href="/" class="navbar-item">
                     Home
                 </a>
+                <a href="/categories" class="navbar-item">
+                    Categorias
+                </a>
+            </div>
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a class="button is-primary">
+                            <strong>Sign up</strong>
+                        </a>
+                        <a class="button is-light">
+                            Log in
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>

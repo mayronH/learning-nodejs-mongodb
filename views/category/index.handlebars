@@ -1,0 +1,25 @@
+<section class="section">
+    <header class="mb-2">
+        <h2 class="title is-4">Categorias</h2>
+    </header>
+    <main class="columns is-multiline is-mobile py-6">
+        {{#each categories}}
+            <div class="column">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="content is-flex is-flex-direction-column">
+                            <h3 class="title is-5 is-capitalized">{{name}}</h3>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/categories/{{slug}}" class="card-footer-item">
+                            Visualizar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {{else}}
+            <h3 class="title is-5 pt-5">Nenhuma categoria encontrada</h3>
+        {{/each}}
+    </main>
+</section>

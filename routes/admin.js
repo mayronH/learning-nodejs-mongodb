@@ -23,7 +23,6 @@ router.get("/posts", (req, res) => {
         })
         .catch((error) => {
             req.flash("error_msg", "Erro ao exibir postagens, tente novamente mais tarde");
-            console.log(error);
             res.redirect("/admin");
         });
 });
@@ -36,7 +35,6 @@ router.get("/posts/add", (req, res) => {
         })
         .catch((error) => {
             req.flash("error_msg", "Erro ao exibir categorias, tente novamente mais tarde");
-            console.log(error);
             res.redirect("/admin");
         });
 });
@@ -62,7 +60,6 @@ router.post("/posts/new", (req, res) => {
             })
             .catch((error) => {
                 req.flash("error_msg", "Erro ao salvar a postagem, tente novamente mais tarde");
-                console.log(error);
                 res.redirect("/admin");
             });
     }
@@ -79,13 +76,11 @@ router.get("/posts/edit/:id", (req, res) => {
                 })
                 .catch((error) => {
                     req.flash("error_msg", "Erro ao exibir categorias, tente novamente mais tarde");
-                    console.log(error);
                     res.send("/admin/posts");
                 });
         })
         .catch((error) => {
             req.flash("error_msg", "Essa postagem não existe");
-            console.log(error);
             res.send("/admin/posts");
         });
 });
@@ -111,13 +106,11 @@ router.post("/posts/edit", (req, res) => {
                     })
                     .catch((error) => {
                         req.flash("error_msg", "Erro interno ao salvar a postagem, tente novamente mais tarde");
-                        console.log(error);
                         res.redirect("/admin/posts");
                     });
             })
             .catch((error) => {
                 req.flash("error_msg", "Erro ao editar a postagem, tente novamente mais tarde");
-                console.log(error);
                 res.send("/admin/posts");
             });
     }
@@ -131,7 +124,6 @@ router.get("/posts/delete/:id", (req, res) => {
         })
         .catch((error) => {
             req.flash("error_msg", "Erro ao deletar a postagem, tente novamente mais tarde");
-            console.log(error);
             res.send("/admin/posts");
         });
 });
@@ -145,7 +137,6 @@ router.get("/posts/show/:id", (req, res) => {
         })
         .catch((error) => {
             req.flash("error_msg", "Essa postagem não existe");
-            console.log(error);
             res.send("/admin/posts");
         });
 });
@@ -159,7 +150,6 @@ router.get("/categories", (req, res) => {
         })
         .catch((error) => {
             req.flash("error_msg", "Erro ao exibir categorias, tente novamente mais tarde");
-            console.log(error);
             res.redirect("/admin");
         });
 });
@@ -186,7 +176,6 @@ router.post("/categories/new", (req, res) => {
             })
             .catch((error) => {
                 req.flash("error_msg", "Erro ao salvar categoria, tente novamente mais tarde");
-                console.log(error);
                 res.redirect("/admin");
             });
     }
@@ -200,7 +189,6 @@ router.get("/categories/edit/:id", (req, res) => {
         })
         .catch((error) => {
             req.flash("error_msg", "Essa categoria não existe");
-            console.log(error);
             res.send("/admin/categories");
         });
 });
@@ -224,13 +212,11 @@ router.post("/categories/edit", (req, res) => {
                     })
                     .catch((error) => {
                         req.flash("error_msg", "Erro interno ao salvar a categoria, tente novamente mais tarde");
-                        console.log(error);
                         res.send("/admin/categories");
                     });
             })
             .catch((error) => {
                 req.flash("error_msg", "Erro ao editar a categoria, tente novamente mais tarde");
-                console.log(error);
                 res.send("/admin/categories");
             });
     }
@@ -244,7 +230,6 @@ router.get("/categories/delete/:id", (req, res) => {
         })
         .catch((error) => {
             req.flash("error_msg", "Erro ao deletar a categoria, tente novamente mais tarde");
-            console.log(error);
             res.send("/admin/categories");
         });
 });

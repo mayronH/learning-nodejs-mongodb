@@ -1,0 +1,43 @@
+<section class="section">
+    <header class="mb-2">
+        <h1 class="title is-4">Bem Vindo ao Blog em NodeJS</h1>
+        <p class="subtitle is-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Facilisi etiam dignissim diam quis enim lobortis.</p>
+    </header>
+    <main class="block py-6">
+        <header class="mb-2">
+            <h2 class="title is-5">Postagens Recentes</h2>
+        </header>
+        <main class="columns is-multiline is-mobile posts my-5">
+            {{#each posts}}
+                <div class="column">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="content is-flex is-flex-direction-column is-justify-content-space-between">
+                                <div class="is-flex is-flex-direction-row is-justify-content-space-between">
+                                    <div class="block is-flex is-flex-direction-column">
+                                        <h3 class="title is-5 is-capitalized mb-5">{{title}}</h3>
+                                    </div>
+                                    <div class="block">
+                                        <span class="tag is-primary is-light is-medium">{{category.name}}</span>
+                                    </div>
+                                </div>
+                                <div class="block py-3">
+                                    <p class="post-content">{{description}}</p>
+                                </div>
+                                <div class="block has-text-right">
+                                    <time datetime="{{date}}">{{date}}</time>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="/post/{{slug}}" class="card-footer-item">Leia mais</a>
+                        </div>
+                    </div>
+                </div>
+            {{else}}
+                <h3 class="title is-6 pt-5">Nenhuma postagem encontrada</h3>
+            {{/each}}
+        </main>
+    </main>
+</section>
