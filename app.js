@@ -108,8 +108,7 @@ app.get("/categories", (req, res) => {
 
 app.get("/categories/:slug", (req, res) => {
     Category.findOne({ slug: req.params.slug })
-        .lean()
-        .then((category) => {
+        .lean.then((category) => {
             if (category) {
                 Post.find({ category: category._id })
                     .lean()
