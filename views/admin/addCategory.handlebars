@@ -11,13 +11,13 @@
         <div class="field">
             <label class="label" for="name">Nome</label>
             <div class="control">
-                <input class="input" type="text" id="name" name="name" placeholder="Nome da categoria" />
+                <input class="input" type="text" id="name" name="name" placeholder="Nome da categoria" required />
             </div>
         </div>
         <div class="field">
             <label class="label" for="slug">Slug</label>
             <div class="control">
-                <input class="input" type="text" id="slug" name="slug" placeholder="Slug da categoria" />
+                <input class="input" type="text" id="slug" name="slug" placeholder="Slug da categoria" required />
             </div>
         </div>
         <div class="field is-grouped">
@@ -25,7 +25,7 @@
                 <button class="button is-link" type="submit">Salvar</button>
             </div>
             <div class="control">
-                <button class="button is-link is-light">Cancelar</button>
+                <button class="button is-link is-light" type="button" onclick="window.history.back()">Cancelar</button>
             </div>
         </div>
     </form>

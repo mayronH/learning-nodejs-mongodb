@@ -6,18 +6,35 @@
         </div>
     {{else}}
     {{/each}}
-    <h1 class="title is-4">Cadastro de Postagens</h1>
-    <form action="/admin/posts/new" method="post">
+    <h1 class="title is-4">Editar Postagens</h1>
+    <form action="/admin/posts/edit" method="post">
+        <input type="hidden" name="id" value="{{post._id}}" />
         <div class="field">
             <label class="label" for="title">Título</label>
             <div class="control">
-                <input class="input" type="text" id="title" name="title" placeholder="Título da postagem" required />
+                <input
+                    class="input"
+                    type="text"
+                    id="title"
+                    name="title"
+                    placeholder="Título da postagem"
+                    value="{{post.title}}"
+                    required
+                />
             </div>
         </div>
         <div class="field">
             <label class="label" for="slug">Slug</label>
             <div class="control">
-                <input class="input" type="text" id="slug" name="slug" placeholder="Slug da postagem" required />
+                <input
+                    class="input"
+                    type="text"
+                    id="slug"
+                    name="slug"
+                    placeholder="Slug da postagem"
+                    value="{{post.slug}}"
+                    required
+                />
             </div>
         </div>
         <div class="field">
@@ -41,6 +58,7 @@
                     id="description"
                     name="description"
                     placeholder="Descrição da postagem"
+                    value="{{post.description}}"
                     required
                 />
             </div>
@@ -48,7 +66,7 @@
         <div class="field">
             <label class="label" for="content">Conteúdo</label>
             <div class="control">
-                <textarea class="textarea" id="content" name="content" required></textarea>
+                <textarea class="textarea" id="content" name="content" required>{{post.content}}</textarea>
             </div>
         </div>
 

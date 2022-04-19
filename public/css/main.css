@@ -4,3 +4,22 @@
 
     min-height: 100vh;
 }
+
+.card-footer button {
+    flex: 1;
+}
+
+.posts .card {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+
+    height: 100%;
+}
+
+.post-content {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+}

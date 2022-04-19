@@ -1,6 +1,47 @@
 <section class="section">
-    <header class="mb-2">
+    <header class="mb-2 is-flex is-flex-direction-row is-justify-content-space-between">
         <h2 class="title is-4">Lista de Posts</h2>
         <a href="/admin/posts/add"><button class="button is-primary">Nova Postagem</button></a>
     </header>
+    <main class="columns is-multiline is-mobile posts">
+        {{#each posts}}
+            <div class="column">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="content is-flex is-flex-direction-column is-justify-content-space-between">
+                            <div class="is-flex is-flex-direction-row is-justify-content-space-between">
+                                <div class="is-flex is-flex-direction-column">
+                                    <h3 class="title is-5 is-capitalized mb-5">{{title}}</h3>
+                                    <small class="subtitle is-6 is-lowercase mb-2">{{slug}}</small>
+                                    <small class="">{{description}}</small>
+                                </div>
+                                <div>
+                                    <span class="tag is-primary is-light is-medium">{{category.name}}</span>
+                                </div>
+                            </div>
+                            <div class="content py-3">
+                                <p class="post-content">{{content}}</p>
+                            </div>
+                            <div class="has-text-right">
+                                <time datetime="{{date}}">{{date}}</time>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/admin/posts/show/{{_id}}" class="card-footer-item p-0">
+                            <button class="button is-primary">Visualizar</button>
+                        </a>
+                        <a href="/admin/posts/edit/{{_id}}" class="card-footer-item p-0">
+                            <button class="button is-link">Editar</button>
+                        </a>
+                        <a href="/admin/posts/delete/{{_id}}" class="card-footer-item p-0">
+                            <button class="button is-danger">Excluir</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {{else}}
+            <h3 class="title is-5 pt-5">Nenhuma postagem encontrada</h3>
+        {{/each}}
+    </main>
 </section>

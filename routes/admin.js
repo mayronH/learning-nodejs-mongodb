@@ -5,13 +5,27 @@ require("../models/Category");
 require("../models/Post");
 
 const Category = mongoose.model("categories");
+const Post = mongoose.model("posts");
+
+const validation = require("../controller/admin");
 
 router.get("/", (req, res) => {
     res.render("admin/index");
 });
 
 router.get("/posts", (req, res) => {
-    res.render("admin/posts");
+    Post.find()
+        .lean()
+        .populate("category")
+        .sort({ date: "desc" })
+        .then((posts) => {
+            res.render("admin/posts", { posts: posts });
+        })
+        .catch((error) => {
+            req.flash("error_msg", "Erro ao exibir postagens, tente novamente mais tarde");
+            console.log(error);
+            res.redirect("/admin");
+        });
 });
 
 router.get("/posts/add", (req, res) => {
@@ -23,7 +37,116 @@ router.get("/posts/add", (req, res) => {
         .catch((error) => {
             req.flash("error_msg", "Erro ao exibir categorias, tente novamente mais tarde");
             console.log(error);
-            res.send("/admin");
+            res.redirect("/admin");
+        });
+});
+
+router.post("/posts/new", (req, res) => {
+    const errors = validation.validatePost(req);
+
+    if (errors.length > 0) {
+        res.render("admin/addPost", { errors: errors });
+    } else {
+        const newPost = {
+            title: req.body.title,
+            slug: req.body.slug,
+            category: req.body.category,
+            description: req.body.description,
+            content: req.body.content,
+        };
+
+        Post.create(newPost)
+            .then(() => {
+                req.flash("success_msg", "Postagem criada com sucesso!");
+                res.redirect("/admin/posts");
+            })
+            .catch((error) => {
+                req.flash("error_msg", "Erro ao salvar a postagem, tente novamente mais tarde");
+                console.log(error);
+                res.redirect("/admin");
+            });
+    }
+});
+
+router.get("/posts/edit/:id", (req, res) => {
+    Post.findById(req.params.id)
+        .lean()
+        .then((post) => {
+            Category.find()
+                .lean()
+                .then((categories) => {
+                    res.render("admin/editPost", { categories: categories, post: post });
+                })
+                .catch((error) => {
+                    req.flash("error_msg", "Erro ao exibir categorias, tente novamente mais tarde");
+                    console.log(error);
+                    res.send("/admin/posts");
+                });
+        })
+        .catch((error) => {
+            req.flash("error_msg", "Essa postagem não existe");
+            console.log(error);
+            res.send("/admin/posts");
+        });
+});
+
+router.post("/posts/edit", (req, res) => {
+    const errors = validation.validatePost(req);
+
+    if (errors.length > 0) {
+        res.render("admin/editPost", { errors: errors });
+    } else {
+        Post.findById(req.body.id)
+            .then((post) => {
+                post.title = req.body.title;
+                post.slug = req.body.slug;
+                post.description = req.body.description;
+                post.category = req.body.category;
+                post.content = req.body.content;
+
+                post.save()
+                    .then(() => {
+                        req.flash("success_msg", "Postagem editada com sucesso!");
+                        res.redirect("/admin/posts");
+                    })
+                    .catch((error) => {
+                        req.flash("error_msg", "Erro interno ao salvar a postagem, tente novamente mais tarde");
+                        console.log(error);
+                        res.redirect("/admin/posts");
+                    });
+            })
+            .catch((error) => {
+                req.flash("error_msg", "Erro ao editar a postagem, tente novamente mais tarde");
+                console.log(error);
+                res.send("/admin/posts");
+            });
+    }
+});
+
+router.get("/posts/delete/:id", (req, res) => {
+    Post.remove({ _id: req.params.id })
+        .then(() => {
+            req.flash("success_msg", "Postagem excluída com sucesso!");
+            res.redirect("/admin/posts");
+        })
+        .catch((error) => {
+            req.flash("error_msg", "Erro ao deletar a postagem, tente novamente mais tarde");
+            console.log(error);
+            res.send("/admin/posts");
+        });
+});
+
+router.get("/posts/show/:id", (req, res) => {
+    Post.findById(req.params.id)
+        .lean()
+        .populate("category")
+        .then((post) => {
+            res.render("admin/post", { post: post });
+        })
+        .catch((error) => {
+            req.flash("error_msg", "Essa postagem não existe");
+            console.log(error);
+            res.send("/admin/posts");
         });
 });
 
@@ -37,7 +160,7 @@ router.get("/categories", (req, res) => {
         .catch((error) => {
             req.flash("error_msg", "Erro ao exibir categorias, tente novamente mais tarde");
             console.log(error);
-            res.send("/admin");
+            res.redirect("/admin");
         });
 });
 
@@ -46,19 +169,7 @@ router.get("/categories/add", (req, res) => {
 });
 
 router.post("/categories/new", (req, res) => {
-    let errors = [];
-
-    if (!req.body.name || typeof req.body.name == undefined || req.body.name == null) {
-        errors.push({ text: "Nome inválido" });
-    }
-
-    if (!req.body.slug || typeof req.body.slug == undefined || req.body.slug == null) {
-        errors.push({ text: "Slug inválido" });
-    }
-
-    if (req.body.name.length < 2) {
-        errors.push({ text: "Nome muito curto, pelo menos 2 caracteres" });
-    }
+    const errors = validation.validateCategory(req);
 
     if (errors.length > 0) {
         res.render("admin/addCategory", { errors: errors });
@@ -76,7 +187,7 @@ router.post("/categories/new", (req, res) => {
             .catch((error) => {
                 req.flash("error_msg", "Erro ao salvar categoria, tente novamente mais tarde");
                 console.log(error);
-                res.send("/admin");
+                res.redirect("/admin");
             });
     }
 });
@@ -95,19 +206,7 @@ router.get("/categories/edit/:id", (req, res) => {
 });
 
 router.post("/categories/edit", (req, res) => {
-    let errors = [];
-
-    if (!req.body.name || typeof req.body.name == undefined || req.body.name == null) {
-        errors.push({ text: "Nome inválido" });
-    }
-
-    if (!req.body.slug || typeof req.body.slug == undefined || req.body.slug == null) {
-        errors.push({ text: "Slug inválido" });
-    }
-
-    if (req.body.name.length < 2) {
-        errors.push({ text: "Nome muito curto, pelo menos 2 caracteres" });
-    }
+    const errors = validation.validateCategory(req);
 
     if (errors.length > 0) {
         res.render("admin/editCategory", { errors: errors });

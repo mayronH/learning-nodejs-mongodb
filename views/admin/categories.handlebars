@@ -1,5 +1,5 @@
 <section class="section">
-    <header class="mb-2">
+    <header class="mb-2 is-flex is-flex-direction-row is-justify-content-space-between">
         <h2 class="title is-4">Lista de Categorias</h2>
         <a href="/admin/categories/add"><button class="button is-primary">Nova Categoria</button></a>
     </header>
@@ -9,19 +9,17 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="content is-flex is-flex-direction-column">
-                            <h3 class="is-6">{{name}}</h3>
-                            <small>{{slug}}</small>
+                            <h3 class="title is-5 is-capitalized">{{name}}</h3>
+                            <small class="subtitle is-6 is-lowercase">{{slug}}</small>
                         </div>
                     </div>
-                    <div class="card-footer is-justify-content-end px-2">
-                        <div class="buttons are-small py-2">
-                            <a href="/admin/categories/edit/{{_id}}">
-                                <button class="button is-link mx-1">Editar</button>
-                            </a>
-                            <a href="/admin/categories/delete/{{_id}}">
-                                <button class="button is-danger mx-1">Excluir</button>
-                            </a>
-                        </div>
+                    <div class="card-footer">
+                        <a href="/admin/categories/edit/{{_id}}" class="card-footer-item p-0">
+                            <button class="button is-link is-small">Editar</button>
+                        </a>
+                        <a href="/admin/categories/delete/{{_id}}" class="card-footer-item p-0">
+                            <button class="button is-danger is-small">Excluir</button>
+                        </a>
                     </div>
                 </div>
             </div>
