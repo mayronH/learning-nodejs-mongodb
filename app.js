@@ -3,19 +3,22 @@ const handlebars = require("express-handlebars");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const flash = require("connect-flash");
+const passport = require("passport");
 
 require("./models/Post");
 require("./models/Category");
+require("./config/auth")(passport);
 
 const app = express();
 const admin = require("./routes/admin");
+const user = require("./routes/user");
 const path = require("path");
 
 const Post = mongoose.model("posts");
 const Category = mongoose.model("categories");
 
 // Config
-// configurando sessão
+// Configurando sessão
 app.use(
     session({
         secret: "teste",
@@ -23,12 +26,23 @@ app.use(
         saveUninitialized: true,
     })
 );
+
+// Configurando autenticação
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Flash message
 app.use(flash());
 
 // Salvando variavéis globais
 app.use((req, res, next) => {
+    // Flash messages
     res.locals.success_msg = req.flash("success_msg");
     res.locals.error_msg = req.flash("error_msg");
+    // Passport flash message
+    res.locals.error = req.flash("error");
+    // Logged User
+    res.locals.user = req.user || null;
     next();
 });
 
@@ -61,7 +75,7 @@ mongoose
         console.log(error);
     });
 
-//Route
+//Routes
 app.get("/", (req, res) => {
     Post.find()
         .lean()
@@ -108,7 +122,8 @@ app.get("/categories", (req, res) => {
 
 app.get("/categories/:slug", (req, res) => {
     Category.findOne({ slug: req.params.slug })
-        .lean.then((category) => {
+        .lean()
+        .then((category) => {
             if (category) {
                 Post.find({ category: category._id })
                     .lean()
@@ -134,7 +149,11 @@ app.get("/404", (req, res) => {
     res.send("404");
 });
 
+// Admin Routes
 app.use("/admin", admin);
+
+// User Routes
+app.use("/user", user);
 
 // Server
 app.listen(8080, () => {

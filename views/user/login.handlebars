@@ -1,0 +1,38 @@
+<section class="section">
+    {{#if error}}
+        <div class="notification is-danger">
+            <button class="delete"></button>
+            {{error}}
+        </div>
+    {{else}}
+    {{/if}}
+    <h1 class="title is-4">Login</h1>
+    <form action="/user/login" class="box" method="post">
+        <div class="field">
+            <label class="label" for="email">E-mail</label>
+            <div class="control">
+                <input class="input" type="email" id="email" name="email" placeholder="email@email.com" required />
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label" for="password">Senha</label>
+            <div class="control">
+                <input class="input" type="password" id="password" name="password" required />
+            </div>
+        </div>
+
+        <div class="buttons is-grouped pt-5">
+            <div class="control">
+                <button class="button is-primary" type="submit">Login</button>
+            </div>
+            <div class="control">
+                <button
+                    class="button is-danger is-light"
+                    type="button"
+                    onclick="window.history.back()"
+                >Cancelar</button>
+            </div>
+        </div>
+    </form>
+</section>

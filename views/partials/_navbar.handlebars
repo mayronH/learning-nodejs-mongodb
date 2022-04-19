@@ -1,43 +1,64 @@
-<header class="header is-relative is-clipped">
-    <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand is-align-items-center">
-            <a class="navbar-item" href="">
-                Blog NodeJS
-            </a>
+<nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand is-align-items-center">
+        <a class="navbar-item" href="">
+            Blog NodeJS
+        </a>
 
-            <a
-                role="button"
-                class="navbar-burger navbar-menu-open is-flex-touch is-align-items-center is-justify-content-center"
-                aria-label="menu"
-                aria-expanded="false"
-                data-target="menu"
-            >
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
+        <a
+            role="button"
+            class="navbar-burger navbar-menu-open is-flex-touch is-align-items-center is-justify-content-center"
+            aria-label="menu"
+            aria-expanded="false"
+            data-target="menu"
+        >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+
+    <div id="menu" class="navbar-menu is-dark">
+        <div class="navbar-start">
+            <a href="/" class="navbar-item">
+                Home
             </a>
-        </div>
-        <div id="menu" class="navbar-menu">
-            <div class="navbar-start">
-                <a href="/" class="navbar-item">
-                    Home
-                </a>
-                <a href="/categories" class="navbar-item">
-                    Categorias
-                </a>
-            </div>
-            <div class="navbar-end">
-                <div class="navbar-item">
-                    <div class="buttons">
-                        <a class="button is-primary">
-                            <strong>Sign up</strong>
+            <a href="/categories" class="navbar-item">
+                Categorias
+            </a>
+            {{#if user}}
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        Painel Administrativo
+                    </a>
+
+                    <div class="navbar-dropdown">
+                        <a href="/admin/posts" class="navbar-item">
+                            Gerenciar Posts
                         </a>
-                        <a class="button is-light">
-                            Log in
+                        <a href="/admin/categories" class="navbar-item">
+                            Gerenciar Categorias
                         </a>
                     </div>
                 </div>
+            {{/if}}
+        </div>
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    {{#if user}}
+                        <a href="/user/logout" class="button is-danger">
+                            <strong>Log out</strong>
+                        </a>
+                    {{else}}
+                        <a href="/user/signup" class="button is-primary">
+                            <strong>Sign up</strong>
+                        </a>
+                        <a href="/user/login" class="button is-light">
+                            Log in
+                        </a>
+                    {{/if}}
+                </div>
             </div>
         </div>
-    </nav>
-</header>
+    </div>
+</nav>

@@ -9,11 +9,14 @@ const Post = mongoose.model("posts");
 
 const validation = require("../controller/admin");
 
+// Require somente o objeto isADmin
+const { isAdmin } = require("../helpers/isAdmin");
+
 router.get("/", (req, res) => {
     res.render("admin/index");
 });
 
-router.get("/posts", (req, res) => {
+router.get("/posts", isAdmin, (req, res) => {
     Post.find()
         .lean()
         .populate("category")
@@ -27,7 +30,7 @@ router.get("/posts", (req, res) => {
         });
 });
 
-router.get("/posts/add", (req, res) => {
+router.get("/posts/add", isAdmin, (req, res) => {
     Category.find()
         .lean()
         .then((categories) => {
@@ -39,7 +42,7 @@ router.get("/posts/add", (req, res) => {
         });
 });
 
-router.post("/posts/new", (req, res) => {
+router.post("/posts/new", isAdmin, (req, res) => {
     const errors = validation.validatePost(req);
 
     if (errors.length > 0) {
@@ -65,7 +68,7 @@ router.post("/posts/new", (req, res) => {
     }
 });
 
-router.get("/posts/edit/:id", (req, res) => {
+router.get("/posts/edit/:id", isAdmin, (req, res) => {
     Post.findById(req.params.id)
         .lean()
         .then((post) => {
@@ -85,7 +88,7 @@ router.get("/posts/edit/:id", (req, res) => {
         });
 });
 
-router.post("/posts/edit", (req, res) => {
+router.post("/posts/edit", isAdmin, (req, res) => {
     const errors = validation.validatePost(req);
 
     if (errors.length > 0) {
@@ -116,7 +119,7 @@ router.post("/posts/edit", (req, res) => {
     }
 });
 
-router.get("/posts/delete/:id", (req, res) => {
+router.get("/posts/delete/:id", isAdmin, (req, res) => {
     Post.remove({ _id: req.params.id })
         .then(() => {
             req.flash("success_msg", "Postagem excluída com sucesso!");
@@ -128,7 +131,7 @@ router.get("/posts/delete/:id", (req, res) => {
         });
 });
 
-router.get("/posts/show/:id", (req, res) => {
+router.get("/posts/show/:id", isAdmin, (req, res) => {
     Post.findById(req.params.id)
         .lean()
         .populate("category")
@@ -141,7 +144,7 @@ router.get("/posts/show/:id", (req, res) => {
         });
 });
 
-router.get("/categories", (req, res) => {
+router.get("/categories", isAdmin, (req, res) => {
     Category.find()
         .sort({ date: "desc" })
         .lean()
@@ -154,11 +157,11 @@ router.get("/categories", (req, res) => {
         });
 });
 
-router.get("/categories/add", (req, res) => {
+router.get("/categories/add", isAdmin, (req, res) => {
     res.render("admin/addCategory");
 });
 
-router.post("/categories/new", (req, res) => {
+router.post("/categories/new", isAdmin, (req, res) => {
     const errors = validation.validateCategory(req);
 
     if (errors.length > 0) {
@@ -181,7 +184,7 @@ router.post("/categories/new", (req, res) => {
     }
 });
 
-router.get("/categories/edit/:id", (req, res) => {
+router.get("/categories/edit/:id", isAdmin, (req, res) => {
     Category.findById(req.params.id)
         .lean()
         .then((category) => {
@@ -193,7 +196,7 @@ router.get("/categories/edit/:id", (req, res) => {
         });
 });
 
-router.post("/categories/edit", (req, res) => {
+router.post("/categories/edit", isAdmin, (req, res) => {
     const errors = validation.validateCategory(req);
 
     if (errors.length > 0) {
@@ -222,7 +225,7 @@ router.post("/categories/edit", (req, res) => {
     }
 });
 
-router.get("/categories/delete/:id", (req, res) => {
+router.get("/categories/delete/:id", isAdmin, (req, res) => {
     Category.remove({ _id: req.params.id })
         .then(() => {
             req.flash("success_msg", "Categoria excluída com sucesso!");
